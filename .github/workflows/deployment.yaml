@@ -17,7 +17,7 @@ jobs:
       - name: Get fresh copy of code base
         uses: actions/checkout@v3
       - name: Cache Dependencies after node install
-        uses: actions/cahce@v3
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key : npm-dependencies-${{ hashFiles('**/package-lock.json')}}
