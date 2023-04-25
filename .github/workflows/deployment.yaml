@@ -12,7 +12,7 @@ jobs:
       MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
       MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
-    runs-on: ubuntu_latest
+    runs-on: ubuntu-latest
     steps: 
       - name: Get fresh copy of code base
         uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
           echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME}}"
   deploy: 
     needs: test
-    runs-on: ubuntu_latest
+    runs-on: ubuntu-latest
     steps: 
       - name: Output Information
         run : |
