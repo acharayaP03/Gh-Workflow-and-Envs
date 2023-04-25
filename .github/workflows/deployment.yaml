@@ -3,8 +3,15 @@ on:
   push:
     branches:
       - main
+env: 
+  MONGODB_DB_NAME: vuegraphql
 jobs: 
-  test: 
+  test:
+    env: 
+      MONGODB_CLUSTER_ADDRESS: ${{ secrets.MONGODB_CLUSTER_ADDRESS }}
+      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
+      MONGODB_PASSWORD: ${{ sectets.MONGODB_PASSWORD }}
+      PORT: 8080
     runs_on: ubuntu_latest
     steps: 
       - name: Get fresh copy of code base
@@ -13,19 +20,19 @@ jobs:
         uses: actions/cahce@v3
         with:
           path: ~/.npm
-          key : npm-dependencies-${{ hashFiles*'**/package-lock.json'}}
+          key : npm-dependencies-${{ hashFiles('**/package-lock.json')}}
       - name: Install Dependencies
         run : npm ci
       - name: Run Server
-        run : npm start & npx wait-on http://137.0.0.1:PORT
+        run : npm start & npx wait-on http://137.0.0.1:$PORT
       - name: Run Tests
         run : npm test
       - name: Output Information
-        run : echo "....."
+        run : echo "MONGODB_USERNAME: ${{ env.MONGODB_USERNAME}}"
   deploy: 
     needs: test
     runs_on: ubuntu_latest
     steps: 
       - name: Output Information
         run : |
-          echo "......"
+          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"

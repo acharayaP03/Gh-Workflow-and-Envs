@@ -2,6 +2,9 @@
  * @see https://playwright.dev/docs/test-configuration
  * @type {import('@playwright/test').PlaywrightTestConfig}
  */
+
+import dotenv from 'dotenv/config';
+
 const config = {
   testDir: './tests',
   /* Maximum time one test can run for. */
