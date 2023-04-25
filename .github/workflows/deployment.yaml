@@ -1,0 +1,31 @@
+name: Deploy server
+on:
+  push:
+    branches:
+      - main
+jobs: 
+  test: 
+    runs_on: ubuntu_latest
+    steps: 
+      - name: Get fresh copy of code base
+        uses: actions/checkout@v3
+      - name: Cache Dependencies after node install
+        uses: actions/cahce@v3
+        with:
+          path: ~/.npm
+          key : npm-dependencies-${{ hashFiles*'**/package-lock.json'}}
+      - name: Install Dependencies
+        run : npm ci
+      - name: Run Server
+        run : npm start & npx wait-on http://137.0.0.1:PORT
+      - name: Run Tests
+        run : npm test
+      - name: Output Information
+        run : echo "....."
+  deploy: 
+    needs: test
+    runs_on: ubuntu_latest
+    steps: 
+      - name: Output Information
+        run : |
+          echo "......"
