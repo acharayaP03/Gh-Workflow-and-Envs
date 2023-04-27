@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:16-alpine
 
 ENV MONGODB_CONNECTION_PROTOCOL mongodb+srv
 ENV MONGODB_DB_NAME vuegraphql
