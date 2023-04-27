@@ -10,7 +10,7 @@ jobs:
     environment: testing
     runs-on: ubuntu-latest
     container:
-      image: node-16
+      image: node-16-alpine
     env:
       MONGODB_CONNECTION_PROTOCOL: ${{ secrets.MONGODB_CONNECTION_PROTOCOL }}
       MONGODB_CLUSTER_ADDRESS: ${{ secrets.MONGODB_CLUSTER_ADDRESS }}
