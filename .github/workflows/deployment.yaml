@@ -7,12 +7,14 @@ env:
   MONGODB_DB_NAME: vuegraphql
 jobs: 
   test:
-    env: 
+    environment: testing
+    runs-on: ubuntu-latest
+    env:
+      MONGODB_CONNECTION_PROTOCOL: ${{ secrets.MONGODB_CONNECTION_PROTOCOL }}
       MONGODB_CLUSTER_ADDRESS: ${{ secrets.MONGODB_CLUSTER_ADDRESS }}
       MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
       MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
-    runs-on: ubuntu-latest
     steps: 
       - name: Get fresh copy of code base
         uses: actions/checkout@v3
@@ -20,7 +22,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key : npm-dependencies-${{ hashFiles('**/package-lock.json')}}
+          key : ${{ env.CACHE_KEY }}-${{ hashFiles('**/package-lock.json')}}
       - name: Install Dependencies
         run : npm ci
       - name: Run Server
